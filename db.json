@@ -1,0 +1,25 @@
+{
+  "user": [
+    {
+      "name": "Hugues",
+      "address": "Kigali",
+      "email": "hugues@gmail.com",
+      "contact": "0781407229",
+      "id": "1"
+    },
+    {
+      "name": "Jeezy",
+      "address": "Kigali",
+      "email": "jeezy@gmail.com",
+      "contact": "0781407429",
+      "id": "2"
+    },
+    {
+      "name": "Zenicura",
+      "address": "Kigali",
+      "email": "manish@gmail.com",
+      "contact": "075407229",
+      "id": "3"
+    }
+  ]
+}
