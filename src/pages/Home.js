@@ -15,6 +15,7 @@ import Paper from "@material-ui/core/Paper";
 import {useSelector,useDispatch} from 'react-redux'
 import { deleteUser, loadUsers } from '../redux/actions';
 import { Button, ButtonGroup } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 const useButtonStyles = makeStyles((theme ) =>
   createStyles({
@@ -82,6 +83,7 @@ const Home = () => {
     const classes = useStyles();
     const buttonStyles = useButtonStyles()
     let dispatch = useDispatch()
+    let history = useHistory()
     const {users} = useSelector(state =>state.data)
     useEffect(() => {
         dispatch(loadUsers());
@@ -94,6 +96,11 @@ const Home = () => {
     };
     return (
       <div>
+        <div className={buttonStyles.root}>
+          <Button variant="contained" color="primary" onClick={() => history.push("/addUser")}>
+            Add user
+          </Button>
+        </div>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
@@ -127,8 +134,18 @@ const Home = () => {
                           variant="contained"
                           aria-label="contained primary button group"
                         >
-                          <Button color="primary" style={{marginRight:"15px"}}>Edit</Button>
-                          <Button color="secondary" onClick={() => handleDelete(user.id)}>Delete</Button>
+                          <Button
+                            color="primary"
+                            style={{ marginRight: "15px" }}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            color="secondary"
+                            onClick={() => handleDelete(user.id)}
+                          >
+                            Delete
+                          </Button>
                         </ButtonGroup>
                       </div>
                     </StyledTableCell>
