@@ -76,6 +76,9 @@ const useStyles = makeStyles({
   },
 });
 
+const handleDelete = (id) => {
+    
+}
 
 const Home = () => {
     const classes = useStyles();
@@ -120,8 +123,8 @@ const Home = () => {
                           variant="contained"
                           aria-label="contained primary button group"
                         >
-                          <Button color="primary">Edit</Button>
-                          <Button color="secondary">Delete</Button>
+                          <Button color="primary" style={{marginRight:"15px"}}>Edit</Button>
+                          <Button color="secondary" onClick={() => handleDelete(user.id)}>Delete</Button>
                         </ButtonGroup>
                       </div>
                     </StyledTableCell>
