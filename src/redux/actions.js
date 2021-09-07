@@ -27,10 +27,11 @@ export const loadUsers = () => {
 export const deleteUser = (id) => {
   return function (dispatch) {
     axios
-      .get(`${process.env.REACT_APP_API}`)
+      .delete(`${process.env.REACT_APP_API}/${id}`) 
       .then((res) => {
         console.log("response", res);
         dispatch(userDeleted());
+        dispatch(loadUsers())
       })
       .catch((error) => console.log(error));
   };

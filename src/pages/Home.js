@@ -13,7 +13,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import {useSelector,useDispatch} from 'react-redux'
-import { loadUsers } from '../redux/actions';
+import { deleteUser, loadUsers } from '../redux/actions';
 import { Button, ButtonGroup } from '@material-ui/core';
 
 const useButtonStyles = makeStyles((theme ) =>
@@ -76,9 +76,7 @@ const useStyles = makeStyles({
   },
 });
 
-const handleDelete = (id) => {
-    
-}
+
 
 const Home = () => {
     const classes = useStyles();
@@ -88,6 +86,12 @@ const Home = () => {
     useEffect(() => {
         dispatch(loadUsers());
     },[])
+
+    const handleDelete = (id) => {
+      if (window.confirm("Are you sure you wish to delete the user")) {
+        dispatch(deleteUser(id));
+      }
+    };
     return (
       <div>
         <TableContainer component={Paper}>
@@ -118,7 +122,7 @@ const Home = () => {
                       {user.address}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <div className={classes.root}>
+                      <div className={buttonStyles.root}>
                         <ButtonGroup
                           variant="contained"
                           aria-label="contained primary button group"
