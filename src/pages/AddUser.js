@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from "@material-ui/lab/Alert";
+import {useDispatch} from 'react-redux'
+import { addUser } from '../redux/actions';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,6 +38,7 @@ const AddUser = () => {
     const [error,setError] = useState(false)
 
     const history = useHistory();
+    const dispatch = useDispatch()
     const {name,email,contact,address} = state;
     const handleInputChange = (e) => {
         let {name,value} = e.target
@@ -48,9 +51,13 @@ const AddUser = () => {
             setError(true)
             setTimeout(() => {
                 setError(false)
-            }, 4000);
+            }, 3000);
             return
+        } else {
+            dispatch(addUser(state))
+            history.push("/")
         }
+
     }
 
     return (
@@ -64,6 +71,7 @@ const AddUser = () => {
           Go back
         </Button>
         <h2>Add user</h2>
+
         <form
           className={classes.root}
           noValidate
@@ -74,6 +82,7 @@ const AddUser = () => {
             id="standard-basic"
             label="Name"
             value={name}
+            name="name"
             type="text"
             onChange={handleInputChange}
           />
@@ -82,6 +91,7 @@ const AddUser = () => {
             id="standard-basic"
             label="Email"
             value={email}
+            name="email"
             type="email"
             onChange={handleInputChange}
           />
@@ -90,13 +100,16 @@ const AddUser = () => {
             id="standard-basic"
             label="contact"
             value={contact}
+            name="contact"
             type="number"
+            onChange={handleInputChange}
           />
           <br />
           <TextField
             id="standard-basic"
             label="Address"
             value={address}
+            name="address"
             type="text"
             onChange={handleInputChange}
           />
@@ -111,7 +124,7 @@ const AddUser = () => {
           </Button>
         </form>
         {error && (
-          <Alert severity="warning" style={{width:"70%"}}>
+          <Alert severity="warning" style={{ width: "40%" }}>
             Please complete all required fields!
           </Alert>
         )}
