@@ -159,6 +159,7 @@ const Home = () => {
                           <Button
                             color="primary"
                             style={{ marginRight: "15px" }}
+                            onClick={() => history.push(`/editUser/${user.id}`)}
                           >
                             Edit
                           </Button>
