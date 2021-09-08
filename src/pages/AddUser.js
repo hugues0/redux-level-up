@@ -1,13 +1,15 @@
 import React,{useState} from 'react'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Button } from '@material-ui/core';
+import { Button, Snackbar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import Alert from "@material-ui/lab/Alert";
+import MuiAlert from "@material-ui/lab/Alert";
 import {useDispatch} from 'react-redux'
 import { addUser } from '../redux/actions';
 
-
+ function Alert(props) {
+   return <MuiAlert elevation={16} variant="filled" {...props} />;
+ }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -36,7 +38,7 @@ const AddUser = () => {
     })
 
     const [error,setError] = useState(false)
-
+    const [success, setSuccess] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch()
     const {name,email,contact,address} = state;
@@ -55,10 +57,24 @@ const AddUser = () => {
             return
         } else {
             dispatch(addUser(state))
-            history.push("/")
+            setSuccess(true);
+            setTimeout(() => {
+                history.push("/")
+            }, 1000);
+            
         }
 
     }
+
+   
+
+    const handleClose = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+
+      setSuccess(false);
+    };
 
     return (
       <div className={classes.root}>
@@ -128,6 +144,12 @@ const AddUser = () => {
             Please complete all required fields!
           </Alert>
         )}
+
+        <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            User successfully recorded!
+          </Alert>
+        </Snackbar>
       </div>
     );
 }

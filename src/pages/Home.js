@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import {
   withStyles,
   Theme,
@@ -16,6 +16,12 @@ import {useSelector,useDispatch} from 'react-redux'
 import { deleteUser, loadUsers } from '../redux/actions';
 import { Button, ButtonGroup } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={16} variant="filled" {...props} />;
+}
 
 const useButtonStyles = makeStyles((theme ) =>
   createStyles({
@@ -80,7 +86,9 @@ const useStyles = makeStyles({
 
 
 const Home = () => {
+    
     const classes = useStyles();
+    const [deleted, setDeleted] = useState(false);
     const buttonStyles = useButtonStyles()
     let dispatch = useDispatch()
     let history = useHistory()
@@ -92,12 +100,26 @@ const Home = () => {
     const handleDelete = (id) => {
       if (window.confirm("Are you sure you wish to delete the user")) {
         dispatch(deleteUser(id));
+        setDeleted(true);
       }
     };
+
+      const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+          return;
+        }
+
+        setDeleted(false);
+      };
+
     return (
       <div>
         <div className={buttonStyles.root}>
-          <Button variant="contained" color="primary" onClick={() => history.push("/addUser")}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => history.push("/addUser")}
+          >
             Add user
           </Button>
         </div>
@@ -154,6 +176,11 @@ const Home = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Snackbar open={deleted} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="info">
+            User successfully deleted!
+          </Alert>
+        </Snackbar>
       </div>
     );
 }
