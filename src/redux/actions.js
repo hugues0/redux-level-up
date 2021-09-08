@@ -48,7 +48,7 @@ export const addUser = (user) => {
       .then((res) => {
         console.log("response", res);
         dispatch(userAdded());
-       // dispatch(loadUsers());
+        dispatch(loadUsers());
       })
       .catch((error) => console.log(error));
   };
